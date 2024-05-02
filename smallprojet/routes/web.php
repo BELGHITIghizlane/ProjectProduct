@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-Route::get('/Category',[CategoryController::class,'index'])->name('index');
+Route::get('/Category',[CategoryController::class,'index'])->name('index-category');
 Route::get('/create_catego',[CategoryController::class,'create'])->name('categories.create');
 Route::post('/store',[CategoryController::class,'store'])->name('store-category');
 Route::get('/edit/{id}',[CategoryController::class,'edit'])->name('category-edit');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ProductController;
 
 class ProductController extends Controller
@@ -88,38 +89,56 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+
         $request->validate([
             'name' => 'required',
             'description' => 'required',
             'quantity' => 'required',
-            'image' => 'required|image', // Ensure image is required and it's an actual image
+            'image' => 'required', // Ensure image is required and it's an actual image
             'price' => 'required',
-            'category_id'=>'required|numeric',
+            'category_id'=>'required',
         ]);
+
+
 
         // Find the product by ID
         $product = Product::find($id);
 
 
+
         // Handle the image upload
+
+
         if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($product->image) {
+                Storage::delete($product->image);
+            }
+
+            // Upload the new image
             $imagePath = $request->file('image')->store('images'); // Change 'images' to your desired storage path
-            // Update the image path in the database
             $product->image = $imagePath;
         }
+
+
+
+
 
         // Update other fields
         $product->name = $request->name;
         $product->description = $request->description;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
-       
+        $product->category_id = $request->category_id;
+
+
 
         // Save the product
         $product->save();
 
         // Redirect with success message
-        return redirect()->route("")->with('success', 'Product updated successfully.');
+        return redirect()->route("products")->with('success', 'Product updated successfully.');
     }
 
     /**

@@ -5,7 +5,14 @@
     <div class="col s12">
         <h1 class="text-center" style="color: rgb(0, 162, 255)">Product List</h1>
         <div class="d-flex justify-content-end ">
-             <a href="{{route('create') }}" class="btn btn-primary ">Create</a>
+                <div  class="p-2 g-col-6">
+
+                    <a href="{{route('create')}}" class="btn btn-primary">Create</a>
+
+                  <a href="{{route('index-category') }}" class="btn btn-primary ">Categories</a>
+                </div>
+
+
 
         </div>
         {{-- <table class="table table-bordered border-primary"> --}}
@@ -35,7 +42,7 @@
                         <td>{{ $prouduct->category?->name }}</td>
 
                         <td class="d-flex align-items-center justify-content-center">
-                            <a href="{{ route('edit-product', $prouduct->id) }}" class="btn btn-primary">modifier</a>
+                            <a href="{{route('edit-product', $prouduct->id) }}" class="btn btn-primary">modifier</a>
                             <form method="post" action="{{ route('delete', $prouduct->id) }}">
                                 @csrf
                                 @method('DELETE')
